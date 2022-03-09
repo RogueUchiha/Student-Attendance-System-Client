@@ -10,15 +10,13 @@ import AuthContext from "./store/auth-context";
 function App() {
   const authCtx = useContext(AuthContext);
 
+  const role = "Student";
+
   return (
     <Layout>
       <Routes>
         {!authCtx.isLoggedIn && <Route path="/" element={<HomePage />} />}
         {authCtx.isLoggedIn && <Route path="/" element={<StudentPage />} />}
-        {/* <Route path="/" element={!authCtx.isLoggedIn && <HomePage />} /> */}
-        {/* {authCtx.isLoggedIn && <StudentPage />}
-            {!authCtx.isLoggedIn && <HomePage />} */}
-        {/* </Route> */}
         {authCtx.isLoggedIn && (
           <Route path="/student" element={<StudentPage />} />
         )}

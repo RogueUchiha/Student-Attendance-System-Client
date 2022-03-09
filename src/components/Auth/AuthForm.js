@@ -1,6 +1,6 @@
 import { useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-// import axios from "axios";
+import Axios from "axios";
 
 import AuthContext from "../../store/auth-context";
 import classes from "./AuthForm.module.css";
@@ -21,26 +21,42 @@ const AuthForm = () => {
     const enteredUsername = usernameInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
 
-    const checkCreds = () => {
-      if (enteredUsername !== "Admin" || enteredPassword !== "password") {
-        throw new Error("Invalid Credentials");
+    Axios.post("http://localhost:5000/login", {
+      username: enteredUsername,
+      password: enteredPassword,
+    }).then((response) => {
+      console.log(response);
+      if (response.data.error) {
+        console.log("Wrong credentials");
+      } else {
+        const today = new Date();
+        today.setDate(30);
+        authCtx.login(response.data.AccessToken, today.toISOString());
+        const role = response.data.UserData.role;
+        console.log(role);
       }
-    };
+    });
 
-    try {
-      checkCreds();
-      const today = new Date();
-      today.setDate(27);
-      authCtx.login(
-        "jkfda93opjifea83pidjiopf38qildaff8o34qp",
-        today.toISOString()
-      );
-      // history.replace("/");
-      navigate("/");
-    } catch (e) {
-      console.log(e);
-      alert("Invalid Credentials");
-    }
+    // const checkCreds = () => {
+    //   if (enteredUsername !== "Admin" || enteredPassword !== "password") {
+    //     throw new Error("Invalid Credentials");
+    //   }
+    // };
+
+    // try {
+    //   checkCreds();
+    //   const today = new Date();
+    //   today.setDate(30);
+    //   authCtx.login(
+    //     "jkfda93opjifea83pidjiopf38qildaff8o34qp",
+    //     today.toISOString()
+    //   );
+    //   // history.replace("/");
+    //   navigate("/");
+    // } catch (e) {
+    //   console.log(e);
+    //   alert("Invalid Credentials");
+    // }
 
     // optional: Add validation
 
