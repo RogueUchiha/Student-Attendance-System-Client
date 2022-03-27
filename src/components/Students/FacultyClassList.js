@@ -1,12 +1,9 @@
-import StudentClassItem from "./StudentClassItem";
+import FacultyClassItem from "./FacultyClassItem";
+import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import AuthContext from "../../store/auth-context";
-import { Grid } from "@mui/material";
-import StudentClassItemTest from "./StudentClassItemTest";
-import cssclasses from "./StudentClassList.module.css";
-import axios from "axios";
 
-const StudentClassList = () => {
+const FacultyClassList = () => {
   const [classes, setClasses] = useState([]);
 
   useEffect(() => {
@@ -27,14 +24,12 @@ const StudentClassList = () => {
   };
 
   return (
-    <Grid>
-      <div className={cssclasses.cardlist}>
-        {classes.map((item) => (
-          <StudentClassItemTest key={item.crn} item={item} />
-        ))}
-      </div>
-    </Grid>
+    <div>
+      {classes.map((item) => (
+        <FacultyClassItem key={item.crn} item={item} />
+      ))}
+    </div>
   );
 };
 
-export default StudentClassList;
+export default FacultyClassList;

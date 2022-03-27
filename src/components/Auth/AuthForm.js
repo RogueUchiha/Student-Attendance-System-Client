@@ -27,13 +27,26 @@ const AuthForm = () => {
     }).then((response) => {
       console.log(response);
       if (response.data.error) {
+        alert("Wrong credentials");
         console.log("Wrong credentials");
       } else {
         const today = new Date();
         today.setDate(30);
-        authCtx.login(response.data.AccessToken, today.toISOString());
+        authCtx.login(
+          response.data.AccessToken,
+          today.toISOString(),
+          response.data.UserData
+        );
+        console.log("hello");
+        // navigate("/student");
+        // navigate("/student");
         const role = response.data.UserData.role;
-        console.log(role);
+        // console.log(role);
+        if (role === "Student") {
+          navigate("/student");
+        } else if (role === "Faculty") {
+          navigate("/faculty");
+        }
       }
     });
 

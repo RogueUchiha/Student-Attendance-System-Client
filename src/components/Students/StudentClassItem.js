@@ -10,7 +10,7 @@ const StudentClassItem = ({ item }) => {
   return (
     <Box>
       <Card className={classes.card}>
-        <div>{`${item.dep}:${item.classNum} ${item.className}`}</div>
+        <div>{`${item.department}:${item.courseNumber} ${item.courseName}`}</div>
         <button onClick={attendHandler}>Record Attendance</button>
       </Card>
     </Box>

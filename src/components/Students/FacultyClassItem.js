@@ -12,8 +12,7 @@ import { red } from "@mui/material/colors";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import classes from "./StudentClassItemTest.module.css";
-import { useNotifications } from "@mantine/notifications";
-import axios from "axios";
+import { Link } from "react-router-dom";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -26,40 +25,13 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const StudentClassItemTest = ({ item }) => {
+const FacultyClassItem = ({ item }) => {
   const [expanded, setExpanded] = React.useState(false);
 
-  const notifications = useNotifications();
+  let userData = JSON.parse(localStorage.getItem("data"));
 
   const attendHandler = () => {
     // alert(item.crn);
-    // notifications.showNotification({
-    //   title: "Default notification",
-    //   message: "Hey there, your code is awesome! 🤥",
-    // });
-    // console.log(item.days[0]);
-    if (item.days[0].seatNumber == null) {
-      notifications.showNotification({
-        title: "Error",
-        message: "You have not been assigned a seat yet.",
-        color: "red",
-      });
-    } else {
-      let userData = JSON.parse(localStorage.getItem("data"));
-      axios
-        .post("http://localhost:5000/student", {
-          userid: userData.userid,
-          crn: item.crn,
-        })
-        .then((response) => {
-          console.log(response);
-        });
-      notifications.showNotification({
-        title: "Success",
-        message: `You have submitted your attendance for ${item.courseName}`,
-        color: "green",
-      });
-    }
   };
 
   const handleExpandClick = () => {
@@ -67,10 +39,12 @@ const StudentClassItemTest = ({ item }) => {
   };
 
   return (
-    <Card sx={{ width: 400 }} className={classes.card}>
+    <Card sx={{ maxWidth: 500 }} className={classes.card}>
       <CardContent className={classes.cardcontent}>
         <div>{`${item.department} ${item.courseNumber}: ${item.courseName}`}</div>
-        <button onClick={attendHandler}>Record Attendance</button>
+        <Link to="/assign-seats" state={{ id: userData.userid, crn: item.crn }}>
+          <button onClick={attendHandler}>Assign Seats</button>
+        </Link>
       </CardContent>
       <CardActions disableSpacing>
         <ExpandMore
@@ -84,7 +58,6 @@ const StudentClassItemTest = ({ item }) => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>Instructor: {item.instructor}</Typography>
           <Typography paragraph>Meeting Times:</Typography>
           <Typography>
             {item.days.map((day) => {
@@ -95,12 +68,6 @@ const StudentClassItemTest = ({ item }) => {
                     <li>
                       {day.buildingCode} {day.roomNumber} {day.startTime} to{" "}
                       {day.endTime}
-                    </li>
-                    <li>
-                      Seat:{" "}
-                      {day.seatNumber != null
-                        ? day.seatNumber
-                        : "No seat assigned"}
                     </li>
                   </ul>
                 </div>
@@ -113,4 +80,4 @@ const StudentClassItemTest = ({ item }) => {
   );
 };
 
-export default StudentClassItemTest;
+export default FacultyClassItem;
