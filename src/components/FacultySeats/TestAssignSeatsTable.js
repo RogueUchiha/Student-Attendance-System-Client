@@ -96,7 +96,19 @@ export default function TestAssignSeatsTable({ item }) {
 
   const handleSaveClick = (id) => async (event) => {
     event.stopPropagation();
+    console.log(apiRef.current.getRow(id));
     await apiRef.current.stopRowEditMode({ id });
+    const { user_id, seat_num } = apiRef.current.getRow(id);
+    console.log(user_id, seat_num);
+    axios
+      .post("http://localhost:5000/assignseat", {
+        userid: user_id,
+        crn: item.crn,
+        seatNumber: seat_num,
+      })
+      .then((response) => {
+        console.log(response);
+      });
   };
 
   const handleCancelClick = (id) => async (event) => {
