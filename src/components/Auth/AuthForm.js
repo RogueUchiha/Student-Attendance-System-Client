@@ -46,6 +46,8 @@ const AuthForm = () => {
           navigate("/student");
         } else if (role === "Faculty") {
           navigate("/faculty");
+        } else if (role === "Admin") {
+          navigate("/admin");
         }
       }
     });

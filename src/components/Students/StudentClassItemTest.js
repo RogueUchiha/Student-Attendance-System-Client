@@ -89,7 +89,7 @@ const StudentClassItemTest = ({ item }) => {
           <Typography>
             {item.days.map((day) => {
               return (
-                <div>
+                <div key={item.crn}>
                   <p>{day.day}</p>
                   <ul>
                     <li>
