@@ -1,0 +1,123 @@
+body {
+    margin: 0;
+    position: relative;
+    height: 100%;
+}
+
+header {
+    background-color: #002855;
+    padding: 5%;
+    text-align: center;
+    color: white;
+}
+
+.admin {
+  margin: 0;
+}
+
+.wrapper {
+    display: flex;
+}
+
+.mainbody {
+    background-color: white;
+    padding: 1%;
+    width: 73%;
+    display: block;
+    overflow: auto;
+    min-height: 700px;
+    float: left;
+}
+
+.dtbinf {
+    background-color: whitesmoke;
+    padding: 1%;
+    width: 85%;
+    display: block;
+    overflow: auto;
+    min-height: 550px;
+    margin-left: 5%;
+}
+
+.dtbinf .button {
+    background-color: lightgray;
+    padding: 1.5%;
+    margin: 2%;
+    width: 20%;
+    border-radius: 5px;
+}
+
+.sidebar {
+    background-color: whitesmoke;
+    padding: 1%;
+    width: 23%;
+    display: block;
+    min-height: 700px;
+    float: right;
+    text-align: center;
+}
+
+footer {
+    background-color: #002855;
+    padding: 4.6%;
+    padding-top: 0;
+    text-align: center;
+    display: block;
+    color: white;
+}
+
+.sidebar .button {
+    background-color: lightgray;
+    padding: 3%;
+    margin: 2%;
+    width: 40%;
+    border-radius: 5px;
+}
+
+.reportdiv {
+  background-color: whitesmoke;
+  padding: 1%;
+  width: 85%;
+  display: block;
+  overflow: auto;
+  min-height: 550px;
+  margin-left: 5%;
+  margin-right: 11%;
+}
+
+/* REACT STUFF */
+
+h1, h2, p, ul, li {
+  font-family: sans-serif;
+}
+ul.nav li {
+  display: inline;
+  list-style-type: none;
+  margin: 0;
+}
+ul.nav {
+  background-color: #111;
+  padding: 0;
+  margin: 0;
+}
+ul.nav li a {
+  color: #FFF;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 20px;
+  display: inline-block;
+}
+.content {
+  background-color: #FFF;
+}
+.content h2 {
+  padding: 0;
+  margin: 0;
+}
+.content li {
+  margin-bottom: 10px;
+}
+.active {
+  background-color: #EAAA00;
+}
+  
