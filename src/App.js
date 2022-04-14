@@ -11,6 +11,7 @@ import BackupPage from "./pages/BackupPage";
 import HomeRedirect from "./components/Auth/HomeRedirect";
 import PrivateRoute from "./components/Auth/PrivateRoute";
 import AttendanceOverride from "./pages/AttendanceOverride";
+import FacultyHeader from "./components/Layout/FacultyHeader";
 
 function App() {
   return (
@@ -34,7 +35,7 @@ function App() {
       </Route>
       {/* <Route path="/student" element={<StudentPage />} /> */}
       <Route element={<PrivateRoute allowedRole="Faculty" />}>
-        <Route element={<StudentHeader />}>
+        <Route element={<FacultyHeader />}>
           <Route path="/faculty" element={<FacultyPage />} />
           <Route path="/assign-seats" element={<AssignSeatsPage />} />
           <Route path="/override" element={<AttendanceOverride />} />
