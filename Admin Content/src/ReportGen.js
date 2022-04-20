@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import $ from "jquery";
-import pdfMake from "pdfmake/build/pdfmake"
-import pdfFonts from "pdfmake/build/vfs_fonts"
-import "jquery/dist/jquery.min.js"
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+import "jquery/dist/jquery.min.js";
 import "datatables";
-import "datatables.net-dt/js/dataTables.dataTables"
-import "datatables.net-dt/css/jquery.dataTables.min.css"
+import "datatables.net-dt/js/dataTables.dataTables";
+import "datatables.net-dt/css/jquery.dataTables.min.css";
+import "datatables.net-buttons/js/dataTables.buttons";
+import "datatables.net-buttons/js/buttons.html5.min.js";
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 window.pdfMake = pdfMake;
@@ -142,7 +144,7 @@ class ReportGen extends Component {
         function gen_table(){
 
             //generate table only once by using a variable
-            if (table_generated != true){
+            if (table_generated !== true){
                     
                 //build HTML table and apply ID and class name
                 let table = document.createElement("table");
@@ -201,8 +203,11 @@ class ReportGen extends Component {
                             extend: "pdfHtml5",
                             text: "Save as PDF"
                         }],
+                        //buttons : [
+                            //"pdf", "print"
+                        //],
 
-                    scrollY: 350,
+                    //scrollY: 350,
                     deferRender: true,
                     scroller: true,
                 });
@@ -230,7 +235,7 @@ class ReportGen extends Component {
                 crs_data = data[2];
 
                 //get all entries from specified class and within selected date range
-                if (crs_data.toString() == crs){
+                if (crs_data.toString() === crs){
                         
                     if (
                         (!start_date && !end_date) ||
