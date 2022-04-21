@@ -17,53 +17,60 @@ import Home from "./pages/Home";
 import NewAuthForm from "./components/Auth/NewAuthForm";
 import NewFacultyHeader from "./components/Layout/NewFacultyHeader";
 import NewStudentHeader from "./components/Layout/NewStudentHeader";
+import StudentReportsPage from "./pages/StudentReportsPage";
+import Footer from "./components/Layout/Footer";
 
 function App() {
   return (
     // <Layout>
-    <Routes>
-      {/* {!authCtx.isLoggedIn && <Route path="/" element={<HomePage />} />} */}
-      {/* {authCtx.isLoggedIn && (
+    <>
+      <Routes>
+        {/* {!authCtx.isLoggedIn && <Route path="/" element={<HomePage />} />} */}
+        {/* {authCtx.isLoggedIn && (
           <Route path="/student" element={<StudentPage />} />
         )} */}
-      <Route element={<HomeRedirect />}>
-        {/* <Route element={<Layout />}>
+        <Route element={<HomeRedirect />}>
+          {/* <Route element={<Layout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/auth" element={<AuthPage />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Route> */}
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/auth" element={<NewAuthForm />}></Route>
-      </Route>
-      <Route element={<NewStudentHeader />}>
-        <Route element={<PrivateRoute allowedRole="Student" />}>
-          <Route path="/student" element={<StudentPage />} />
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/auth" element={<NewAuthForm />}></Route>
+          <Route path="*" element={<Navigate to="/" />} />
         </Route>
-      </Route>
-      {/* <Route path="/student" element={<StudentPage />} /> */}
-      <Route element={<PrivateRoute allowedRole="Faculty" />}>
-        <Route element={<NewFacultyHeader />}>
-          <Route path="/faculty" element={<FacultyPage />} />
-          <Route path="/assign-seats" element={<AssignSeatsPage />} />
-          <Route path="/override" element={<AttendanceOverride />} />
-          <Route path="/facultyreports" element={<FacultyReportsPage />} />
+        <Route element={<NewStudentHeader />}>
+          <Route element={<PrivateRoute allowedRole="Student" />}>
+            <Route path="/student" element={<StudentPage />} />
+            <Route path="/studentreports" element={<StudentReportsPage />} />
+          </Route>
         </Route>
-      </Route>
-      <Route element={<PrivateRoute allowedRole="Admin" />}>
-        <Route element={<AdminHeader />}>
-          <Route path="/admin" element={<BackupPage />} />
+        {/* <Route path="/student" element={<StudentPage />} /> */}
+        <Route element={<PrivateRoute allowedRole="Faculty" />}>
+          <Route element={<NewFacultyHeader />}>
+            <Route path="/faculty" element={<FacultyPage />} />
+            <Route path="/assign-seats" element={<AssignSeatsPage />} />
+            <Route path="/override" element={<AttendanceOverride />} />
+            <Route path="/facultyreports" element={<FacultyReportsPage />} />
+          </Route>
         </Route>
-      </Route>
-      {/* {authCtx.isLoggedIn && (
+        <Route element={<PrivateRoute allowedRole="Admin" />}>
+          <Route element={<AdminHeader />}>
+            <Route path="/admin" element={<BackupPage />} />
+          </Route>
+        </Route>
+        {/* {authCtx.isLoggedIn && (
           <Route path="/faculty" element={<FacultyPage />} />
           )}
           {authCtx.isLoggedIn && (
             <Route path="/assign-seats" element={<AssignSeatsPage />} />
           )} */}
-      {/* {!authCtx.isLoggedIn && <Route path="/auth" element={<AuthPage />} />} */}
-      {/* <Route element={<HomeRedirect />}> */}
-      {/* </Route> */}
-    </Routes>
+        {/* {!authCtx.isLoggedIn && <Route path="/auth" element={<AuthPage />} />} */}
+        {/* <Route element={<HomeRedirect />}> */}
+        {/* </Route> */}
+      </Routes>
+      {/* <Footer /> */}
+    </>
     // </Layout>
   );
 }

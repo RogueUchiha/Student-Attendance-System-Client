@@ -61,11 +61,12 @@ function EditToolbar(props) {
 
   const setAttendanceBtn = () => {
     let userData = JSON.parse(localStorage.getItem("data"));
+    console.log(userData.userid, classCrn, classStartDate, classEndDate);
     axios
-      .post("http://localhost:5000/facultyreport", {
-        id: userData.userid,
+      .post("http://localhost:5000/studentreport", {
+        userid: userData.userid,
         crn: classCrn,
-        role: "Faculty",
+        role: "Student",
         startDate: moment(classStartDate).format("YYYY-MM-DD"),
         endDate: moment(classEndDate).format("YYYY-MM-DD"),
       })
@@ -187,7 +188,7 @@ function EditToolbar(props) {
 //   }).isRequired,
 // };
 
-export default function FacultyReportsTable() {
+export default function StudentReportsTable() {
   const [data, setData] = useState({});
   const [formData, setFormData] = useState({
     crn: "",

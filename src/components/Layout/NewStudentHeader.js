@@ -64,7 +64,7 @@ const NewStudentHeader = () => {
                 </a>
                 <ul className="p-2 bg-primary">
                   <li>
-                    <Link to="/facultyreports">Reports</Link>
+                    <Link to="/studentreports">Reports</Link>
                   </li>
                 </ul>
               </li>
@@ -108,7 +108,7 @@ const NewStudentHeader = () => {
               </a>
               <ul className="p-2 bg-primary">
                 <li>
-                  <Link to="/facultyreports">Reports</Link>
+                  <Link to="/studentreports">Reports</Link>
                 </li>
               </ul>
             </li>

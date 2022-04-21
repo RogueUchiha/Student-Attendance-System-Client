@@ -32,6 +32,56 @@ const StudentClassItemTest = ({ item }) => {
 
   const notifications = useNotifications();
 
+  const checkTime = () => {
+    const currentDate = new Date();
+    let trueFlag = false;
+    const day = item.days[0].day;
+    item.days.forEach((element) => {
+      const startTime = convertDate(element.startTime);
+      const endTime = convertDate(element.endTime);
+      switch (element.day) {
+        case "R":
+          if (currentDate.getDay() === 4) {
+            if (startTime < currentDate && endTime > currentDate) {
+              trueFlag = true;
+              console.log(true);
+              return true;
+            }
+          }
+          break;
+
+        default:
+          break;
+      }
+    });
+    return false;
+  };
+
+  const testCheckTime = () => {
+    const currentDate = new Date();
+    let trueFlag = false;
+    const startTime = convertDate("08:00:00");
+    const endTime = convertDate("09:00:00");
+    switch ("R") {
+      case "R":
+        if (currentDate.getDay() === 4) {
+          if (startTime < currentDate && endTime > currentDate) {
+            trueFlag = true;
+            console.log(true);
+            return true;
+          }
+        }
+        break;
+
+      default:
+        break;
+    }
+    console.log(false);
+    return false;
+  };
+
+  console.log(item.days[0]);
+
   const attendHandler = () => {
     // alert(item.crn);
     // notifications.showNotification({
@@ -43,6 +93,12 @@ const StudentClassItemTest = ({ item }) => {
       notifications.showNotification({
         title: "Error",
         message: "You have not been assigned a seat yet.",
+        color: "red",
+      });
+    } else if (!checkTime()) {
+      notifications.showNotification({
+        title: "Error",
+        message: "Not time for class yet.",
         color: "red",
       });
     } else {
@@ -80,6 +136,14 @@ const StudentClassItemTest = ({ item }) => {
     return timeString;
   };
 
+  const convertDate = (time) => {
+    const splitTime = time.split(":");
+    const date = new Date();
+    date.setHours(splitTime[0], splitTime[1], splitTime[2]);
+
+    return date;
+  };
+
   return (
     <Card sx={{ width: 400 }} className={classes.card}>
       <CardContent className={classes.cardcontent}>
@@ -93,7 +157,12 @@ const StudentClassItemTest = ({ item }) => {
         >
           Record Attendance
         </Button> */}
-        <button className="btn btn-primary">Record Attendance</button>
+        <button className="btn btn-primary" onClick={attendHandler}>
+          Record Attendance
+        </button>
+        {/* <button className="btn btn-primary" onClick={testCheckTime}>
+          Test
+        </button> */}
       </CardContent>
       <CardActions disableSpacing>
         <ExpandMore
