@@ -50,26 +50,47 @@ function EditToolbar(props) {
     setFormData,
     setCurrentClass,
     setCurrentDate,
+    setColumnData,
   } = props;
   const [classCrn, setClassCrn] = useState("");
-  const [classDate, setClassDate] = useState(new Date());
+  const [classStartDate, setClassStartDate] = useState(new Date());
+  const [classEndDate, setClassEndDate] = useState(new Date());
 
   const notifications = useNotifications();
 
   const setAttendanceBtn = () => {
     axios
-      .post("http://localhost:5000/override", {
+      .post("http://localhost:5000/facultyreport", {
         id: 7,
         crn: classCrn,
-        startDate: moment(classDate).format("YYYY-MM-DD"),
-        endDate: moment(classDate).format("YYYY-MM-DD"),
+        role: "Faculty",
+        startDate: moment(classStartDate).format("YYYY-MM-DD"),
+        endDate: moment(classEndDate).format("YYYY-MM-DD"),
       })
       .then((response) => {
         if (!response.data.error) {
-          setCurrentClass(classCrn);
-          setCurrentDate(classDate);
+          // setCurrentClass(classCrn);
+          // setCurrentDate(classStartDate);
+          // console.log(response.data);
+          // setData(response.data.attendanceList);
           console.log(response.data);
-          setData(response.data.attendanceList);
+          // console.log(Object.keys(response.data.AttendanceData[0]));
+          // const newColumns = [];
+          // response.data.AttendanceData.map((student) => {});
+          const keys = Object.keys(response.data.AttendanceData[0]);
+          const keysSlice = keys.slice(2);
+          console.log(keysSlice);
+          const newColumns = keysSlice.map((key) => {
+            const column = {
+              field: key,
+              headerName: key,
+              editable: false,
+            };
+            return column;
+          });
+          console.log(newColumns);
+          setColumnData((prevState) => [...prevState, ...newColumns]);
+          setData(response.data.AttendanceData);
         } else {
           // console.log(response.data.error);
           // notifications.showNotifications()
@@ -86,27 +107,28 @@ function EditToolbar(props) {
     setClassCrn(event.target.value);
     console.log(classCrn);
   };
-  // const onChange = (e) => {
-  //   setFormData((prevState) => ({
-  //     ...prevState,
-  //     [e.target.id]: e.target.value,
-  //   }));
-  // };
 
-  // const handleClick = () => {
-  //   const id = randomId();
-  //   apiRef.current.updateRows([{ id, isNew: true }]);
-  //   apiRef.current.startRowEditMode({ id });
+  const columns2 = [
+    { field: "name", headerName: "Name", width: 180, editable: true },
+    {
+      field: "attendance",
+      headerName: "Attendance",
+      type: "singleSelect",
+      valueOptions: ["Present", "Absent"],
+      editable: true,
+    },
+    {
+      field: "attendance2",
+      headerName: "Attendance2",
+      type: "singleSelect",
+      valueOptions: ["Present", "Absent"],
+      editable: true,
+    },
+  ];
 
-  //   // Wait for the grid to render with the new row
-  //   setTimeout(() => {
-  //     apiRef.current.scrollToIndexes({
-  //       rowIndex: apiRef.current.getRowsCount() - 1,
-  //     });
-
-  //     apiRef.current.setCellFocus(id, "name");
-  //   });
-  // };
+  const updateColumns = () => {
+    setColumnData(columns2);
+  };
 
   return (
     <GridToolbarContainer>
@@ -121,9 +143,6 @@ function EditToolbar(props) {
               label="Age"
               onChange={handleChange}
             >
-              {/* <MenuItem value={12755}>Senior Project</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem> */}
               {facultyClasses.map((item) => (
                 <MenuItem key={item.crn} value={item.crn}>
                   {item.courseName}
@@ -132,11 +151,20 @@ function EditToolbar(props) {
             </Select>
           </FormControl>
           <DatePicker
-            label="Date"
-            value={classDate}
+            label="Start Date"
+            value={classStartDate}
             onChange={(newValue) => {
-              setClassDate(newValue);
-              console.log(moment(classDate).format("YYYY-MM-DD"));
+              setClassStartDate(newValue);
+              console.log(moment(classStartDate).format("YYYY-MM-DD"));
+            }}
+            renderInput={(params) => <TextField {...params} />}
+          />
+          <DatePicker
+            label="End Date"
+            value={classEndDate}
+            onChange={(newValue) => {
+              setClassEndDate(newValue);
+              console.log(moment(classEndDate).format("YYYY-MM-DD"));
             }}
             renderInput={(params) => <TextField {...params} />}
           />
@@ -146,6 +174,7 @@ function EditToolbar(props) {
         Set Attendance
       </button> */}
       <Button onClick={setAttendanceBtn}>Submit</Button>
+      <Button onClick={updateColumns}>Update Columns</Button>
     </GridToolbarContainer>
   );
 }
@@ -156,7 +185,7 @@ function EditToolbar(props) {
 //   }).isRequired,
 // };
 
-export default function OverrideAttendanceTable() {
+export default function FacultyReportsTable() {
   const [data, setData] = useState({});
   const [formData, setFormData] = useState({
     crn: "",
@@ -165,21 +194,9 @@ export default function OverrideAttendanceTable() {
   const [facultyClasses, setFacultyClasses] = useState([]);
   const [currentClass, setCurrentClass] = useState(null);
   const [currentDate, setCurrentDate] = useState(new Date());
-
-  // useEffect(() => {
-  //   // let userData = JSON.parse(localStorage.getItem("data"));
-  //   axios
-  //     .post("http://localhost:5000/override", {
-  //       id: 7,
-  //       crn: 12755,
-  //       startDate: "2022-03-22",
-  //       endDate: "2022-03-22",
-  //     })
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       setData(response.data.attendanceList);
-  //     });
-  // }, []);
+  const [columnData, setColumnData] = useState([
+    { field: "name", headerName: "Name", width: 180, editable: false },
+  ]);
 
   useEffect(() => {
     getClasses();
@@ -209,93 +226,20 @@ export default function OverrideAttendanceTable() {
     event.defaultMuiPrevented = true;
   };
 
-  const handleEditClick = (id) => (event) => {
-    event.stopPropagation();
-    apiRef.current.startRowEditMode({ id });
-  };
-
-  const handleSaveClick = (id) => async (event) => {
-    // event.stopPropagation();
-    // await apiRef.current.stopRowEditMode({ id });
-    event.stopPropagation();
-    console.log(apiRef.current.getRow(id));
-    await apiRef.current.stopRowEditMode({ id });
-    const { attendance } = apiRef.current.getRow(id);
-    console.log(id, attendance);
-    axios
-      .post("http://localhost:5000/submitoverride", {
-        id,
-        crn: currentClass,
-        date: moment(currentDate).format("YYYY-MM-DD"),
-      })
-      .then((response) => {
-        console.log(response);
-      });
-  };
-
-  const handleCancelClick = (id) => async (event) => {
-    event.stopPropagation();
-    await apiRef.current.stopRowEditMode({ id, ignoreModifications: true });
-
-    const row = apiRef.current.getRow(id);
-    if (row.isNew) {
-      apiRef.current.updateRows([{ id, _action: "delete" }]);
-    }
-  };
-
   const processRowUpdate = async (newRow) => {
     return { ...newRow, isNew: false };
   };
 
-  const columns = [
-    { field: "name", headerName: "Name", width: 180, editable: true },
-    {
-      field: "attendance",
-      headerName: "Attendance",
-      type: "singleSelect",
-      valueOptions: ["Present", "Absent"],
-      editable: true,
-    },
-
-    {
-      field: "actions",
-      type: "actions",
-      headerName: "Edit",
-      width: 100,
-      cellClassName: "actions",
-      getActions: ({ id }) => {
-        const isInEditMode = apiRef.current.getRowMode(id) === "edit";
-
-        if (isInEditMode) {
-          return [
-            <GridActionsCellItem
-              icon={<SaveIcon />}
-              label="Save"
-              onClick={handleSaveClick(id)}
-              color="primary"
-            />,
-            <GridActionsCellItem
-              icon={<CancelIcon />}
-              label="Cancel"
-              className="textPrimary"
-              onClick={handleCancelClick(id)}
-              color="inherit"
-            />,
-          ];
-        }
-
-        return [
-          <GridActionsCellItem
-            icon={<EditIcon />}
-            label="Edit"
-            className="textPrimary"
-            onClick={handleEditClick(id)}
-            color="inherit"
-          />,
-        ];
-      },
-    },
-  ];
+  // const columns = [
+  //   { field: "name", headerName: "Name", width: 180, editable: true },
+  //   {
+  //     field: "attendance",
+  //     headerName: "Attendance",
+  //     type: "singleSelect",
+  //     valueOptions: ["Present", "Absent"],
+  //     editable: true,
+  //   },
+  // ];
 
   return (
     <div>
@@ -315,13 +259,13 @@ export default function OverrideAttendanceTable() {
       >
         <DataGridPro
           rows={data}
-          columns={columns}
+          columns={columnData}
           apiRef={apiRef}
           editMode="row"
           onRowEditStart={handleRowEditStart}
           onRowEditStop={handleRowEditStop}
           processRowUpdate={processRowUpdate}
-          // getRowId={(row) => row.id}
+          getRowId={(row) => row.students_user_id}
           components={{
             Toolbar: EditToolbar,
           }}
@@ -333,6 +277,7 @@ export default function OverrideAttendanceTable() {
               setFormData,
               setCurrentClass,
               setCurrentDate,
+              setColumnData,
             },
             // updateDataHandler: { setData },
           }}

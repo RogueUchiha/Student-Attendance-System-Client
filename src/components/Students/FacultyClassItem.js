@@ -38,12 +38,36 @@ const FacultyClassItem = ({ item }) => {
     setExpanded(!expanded);
   };
 
+  // console.log(item.days[0].buildingCode);
+  const convertTime = (time) => {
+    const splitTime = time.split(":");
+    const date = new Date();
+    date.setHours(splitTime[0], splitTime[1], splitTime[2]);
+    const options = {
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    };
+    const timeString = date.toLocaleString("en-US", options);
+    return timeString;
+  };
+
   return (
     <Card sx={{ maxWidth: 500 }} className={classes.card}>
       <CardContent className={classes.cardcontent}>
         <div>{`${item.department} ${item.courseNumber}: ${item.courseName}`}</div>
-        <Link to="/assign-seats" state={{ id: userData.userid, crn: item.crn }}>
-          <button onClick={attendHandler}>Assign Seats</button>
+        <Link
+          to="/assign-seats"
+          state={{
+            id: userData.userid,
+            crn: item.crn,
+            room: item.days[0].roomNumber,
+            building: item.days[0].buildingCode,
+          }}
+        >
+          <button onClick={attendHandler} className="btn btn-primary">
+            Assign Seats
+          </button>
         </Link>
       </CardContent>
       <CardActions disableSpacing>
@@ -66,10 +90,11 @@ const FacultyClassItem = ({ item }) => {
                   <p>{day.day}</p>
                   <ul>
                     <li>
-                      {day.buildingCode} {day.roomNumber} {day.startTime} to{" "}
-                      {day.endTime}
+                      {day.buildingCode} {day.roomNumber}{" "}
+                      {convertTime(day.startTime)} to {convertTime(day.endTime)}
                     </li>
                   </ul>
+                  <br />
                 </div>
               );
             })}

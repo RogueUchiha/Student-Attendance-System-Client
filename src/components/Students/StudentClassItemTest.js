@@ -12,6 +12,7 @@ import { red } from "@mui/material/colors";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import classes from "./StudentClassItemTest.module.css";
+import { Button } from "@mantine/core";
 import { useNotifications } from "@mantine/notifications";
 import axios from "axios";
 
@@ -66,11 +67,33 @@ const StudentClassItemTest = ({ item }) => {
     setExpanded(!expanded);
   };
 
+  const convertTime = (time) => {
+    const splitTime = time.split(":");
+    const date = new Date();
+    date.setHours(splitTime[0], splitTime[1], splitTime[2]);
+    const options = {
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    };
+    const timeString = date.toLocaleString("en-US", options);
+    return timeString;
+  };
+
   return (
     <Card sx={{ width: 400 }} className={classes.card}>
       <CardContent className={classes.cardcontent}>
         <div>{`${item.department} ${item.courseNumber}: ${item.courseName}`}</div>
-        <button onClick={attendHandler}>Record Attendance</button>
+        {/* <button onClick={attendHandler}>Record Attendance</button> */}
+        {/* <Button
+          variant="gradient"
+          gradient={{ from: "#002855", to: "#eaaa00" }}
+          gradient={{ from: "blue", to: "yellow" }}
+          onClick={attendHandler}
+        >
+          Record Attendance
+        </Button> */}
+        <button className="btn btn-primary">Record Attendance</button>
       </CardContent>
       <CardActions disableSpacing>
         <ExpandMore
@@ -91,10 +114,10 @@ const StudentClassItemTest = ({ item }) => {
               return (
                 <div key={item.crn}>
                   <p>{day.day}</p>
-                  <ul>
+                  <ul style={{ listStyle: "none" }}>
                     <li>
-                      {day.buildingCode} {day.roomNumber} {day.startTime} to{" "}
-                      {day.endTime}
+                      {day.buildingCode} {day.roomNumber}{" "}
+                      {convertTime(day.startTime)} to {convertTime(day.endTime)}
                     </li>
                     <li>
                       Seat:{" "}
@@ -103,6 +126,7 @@ const StudentClassItemTest = ({ item }) => {
                         : "No seat assigned"}
                     </li>
                   </ul>
+                  <br />
                 </div>
               );
             })}

@@ -4,7 +4,7 @@ import TestAssignSeatsTable from "../components/FacultySeats/TestAssignSeatsTabl
 
 const FacultyPage = () => {
   return (
-    <div>
+    <div className="grid place-items-center">
       <FacultyClassList />
       {/* <TestAssignSeatsTable /> */}
     </div>

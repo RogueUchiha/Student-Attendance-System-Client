@@ -29,7 +29,7 @@ const FacultyHeader = (props) => {
         <nav>
           <ul>
             <li>
-              <Link to="/reports">Attendance Reports</Link>
+              <Link to="/facultyreports">Attendance Reports</Link>
             </li>
             <li>
               <Link to="/faculty">Classes</Link>

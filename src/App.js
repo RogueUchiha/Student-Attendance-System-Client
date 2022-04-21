@@ -11,7 +11,12 @@ import BackupPage from "./pages/BackupPage";
 import HomeRedirect from "./components/Auth/HomeRedirect";
 import PrivateRoute from "./components/Auth/PrivateRoute";
 import AttendanceOverride from "./pages/AttendanceOverride";
+import FacultyReportsPage from "./pages/FacultyReportsPage";
 import FacultyHeader from "./components/Layout/FacultyHeader";
+import Home from "./pages/Home";
+import NewAuthForm from "./components/Auth/NewAuthForm";
+import NewFacultyHeader from "./components/Layout/NewFacultyHeader";
+import NewStudentHeader from "./components/Layout/NewStudentHeader";
 
 function App() {
   return (
@@ -22,23 +27,26 @@ function App() {
           <Route path="/student" element={<StudentPage />} />
         )} */}
       <Route element={<HomeRedirect />}>
-        <Route element={<Layout />}>
+        {/* <Route element={<Layout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/auth" element={<AuthPage />} />
           <Route path="*" element={<Navigate to="/" />} />
-        </Route>
+        </Route> */}
+        <Route path="/" element={<Home />}></Route>
+        <Route path="/auth" element={<NewAuthForm />}></Route>
       </Route>
-      <Route element={<StudentHeader />}>
+      <Route element={<NewStudentHeader />}>
         <Route element={<PrivateRoute allowedRole="Student" />}>
           <Route path="/student" element={<StudentPage />} />
         </Route>
       </Route>
       {/* <Route path="/student" element={<StudentPage />} /> */}
       <Route element={<PrivateRoute allowedRole="Faculty" />}>
-        <Route element={<FacultyHeader />}>
+        <Route element={<NewFacultyHeader />}>
           <Route path="/faculty" element={<FacultyPage />} />
           <Route path="/assign-seats" element={<AssignSeatsPage />} />
           <Route path="/override" element={<AttendanceOverride />} />
+          <Route path="/facultyreports" element={<FacultyReportsPage />} />
         </Route>
       </Route>
       <Route element={<PrivateRoute allowedRole="Admin" />}>
