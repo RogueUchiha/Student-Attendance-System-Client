@@ -45,6 +45,8 @@ class ReportGen extends Component {
             $("#reportClasses").append($("<option></option>").val(data[i].course).html(data[i].course));
             i++;
         });
+        //add "all" option
+        $("#reportClasses").append($("<option></option>").val("All").html("All"));
     }
 
     render() {
@@ -235,7 +237,7 @@ class ReportGen extends Component {
                 crs_data = data[2];
 
                 //get all entries from specified class and within selected date range
-                if (crs_data.toString() === crs){
+                if ((crs_data.toString() === crs) || crs == "All"){
                         
                     if (
                         (!start_date && !end_date) ||
