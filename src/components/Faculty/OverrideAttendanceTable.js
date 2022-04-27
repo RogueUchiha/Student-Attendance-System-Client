@@ -219,18 +219,32 @@ export default function OverrideAttendanceTable() {
     // await apiRef.current.stopRowEditMode({ id });
     event.stopPropagation();
     console.log(apiRef.current.getRow(id));
+    const beforeAttendance = apiRef.current.getRow(id).attendance;
     await apiRef.current.stopRowEditMode({ id });
     const { attendance } = apiRef.current.getRow(id);
     console.log(id, attendance);
-    axios
-      .post("http://localhost:5000/submitoverride", {
-        id,
-        crn: currentClass,
-        date: moment(currentDate).format("YYYY-MM-DD"),
-      })
-      .then((response) => {
-        console.log(response);
-      });
+    if (beforeAttendance === "Absent" && attendance === "Present") {
+      axios
+        .post("http://localhost:5000/submitoverride", {
+          id,
+          crn: currentClass,
+          date: moment(currentDate).format("YYYY-MM-DD"),
+        })
+        .then((response) => {
+          console.log(response);
+        });
+    } else if (beforeAttendance === "Present" && attendance === "Absent") {
+      axios
+        .post("http://localhost:5000/submitoverride", {
+          id,
+          crn: currentClass,
+          date: moment(currentDate).format("YYYY-MM-DD"),
+          action: "Remove",
+        })
+        .then((response) => {
+          console.log(response);
+        });
+    }
   };
 
   const handleCancelClick = (id) => async (event) => {

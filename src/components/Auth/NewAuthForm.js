@@ -2,6 +2,7 @@ import { useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 import carterHall from "../../carterhall2.jpg";
+import carterHall3 from "../../carterhall3.jpg";
 import wvutechlogo from "../../wvutechlogo.png";
 import AuthContext from "../../store/auth-context";
 import NewHeader from "../Layout/NewHeader";
@@ -66,7 +67,7 @@ const NewAuthForm = () => {
           className="hero h-screen"
           style={{
             // backgroundImage: `url(http://api.lorem.space/image/fashion?w=1000&h=800)`,
-            backgroundImage: `url(${carterHall})`,
+            backgroundImage: `url(${carterHall3})`,
           }}
         >
           <div className="hero-overlay bg-opacity-60">
@@ -156,7 +157,7 @@ const NewAuthForm = () => {
             <p>Copyright Akers, Short, Cross © 2022 - All right reserved</p>
           </div>
           <div className="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
-            <a>
+            {/* <a>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -188,7 +189,7 @@ const NewAuthForm = () => {
               >
                 <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path>
               </svg>
-            </a>
+            </a> */}
           </div>
         </footer>
       </div>

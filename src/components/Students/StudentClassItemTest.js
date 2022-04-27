@@ -44,8 +44,6 @@ const StudentClassItemTest = ({ item }) => {
           if (currentDate.getDay() === 4) {
             if (startTime < currentDate && endTime > currentDate) {
               trueFlag = true;
-              console.log(true);
-              return true;
             }
           }
           break;
@@ -54,7 +52,11 @@ const StudentClassItemTest = ({ item }) => {
           break;
       }
     });
-    return false;
+    if (trueFlag) {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   const testCheckTime = () => {
@@ -110,12 +112,20 @@ const StudentClassItemTest = ({ item }) => {
         })
         .then((response) => {
           console.log(response);
+          if (response.data.submissionError) {
+            notifications.showNotification({
+              title: "Error",
+              message: `You have already submitted your attendance for ${item.courseName}`,
+              color: "red",
+            });
+          } else {
+            notifications.showNotification({
+              title: "Success",
+              message: `You have submitted your attendance for ${item.courseName}`,
+              color: "green",
+            });
+          }
         });
-      notifications.showNotification({
-        title: "Success",
-        message: `You have submitted your attendance for ${item.courseName}`,
-        color: "green",
-      });
     }
   };
 
