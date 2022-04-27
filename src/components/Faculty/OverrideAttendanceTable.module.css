@@ -1,0 +1,10 @@
+.gridtable {
+  background-color: white;
+  margin-top: 15px;
+}
+
+.editToolbar {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}

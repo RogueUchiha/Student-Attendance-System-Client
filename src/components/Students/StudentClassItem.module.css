@@ -1,0 +1,17 @@
+.card {
+  margin: 20px auto;
+  width: 50%;
+  min-width: 25rem;
+  display: flex;
+  gap: 2rem;
+  justify-content: space-between;
+  /* flex-basis: 100%; */
+  /* flex: 1; */
+  padding: 15px;
+  /* width: 66%; */
+}
+
+.card > * {
+  /* justify-content: space-between; */
+  /* flex: 1; */
+}

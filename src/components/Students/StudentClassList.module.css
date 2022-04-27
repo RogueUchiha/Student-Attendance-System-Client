@@ -1,0 +1,9 @@
+.cardlist {
+  height: 100%;
+  /* align-items: stretch; */
+  display: flex;
+  flex-direction: column;
+  flex-basis: 25%;
+  /* min-width: 500px; */
+  /* min-height: 132px; */
+}
