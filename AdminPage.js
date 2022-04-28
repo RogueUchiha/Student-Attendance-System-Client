@@ -5,7 +5,7 @@ import {
     NavLink,
     BrowserRouter
   } from "react-router-dom";
-import Home from "./Home";
+import AdminHome from "./AdminHome";
 import AdminReportPage from "./AdminReportPage";
 import AdminBackupPage from "./AdminBackupPage";
  
