@@ -5,11 +5,11 @@ import {
     NavLink,
     BrowserRouter
   } from "react-router-dom";
-import Home from "./Home";
-import ReportGen from "./AdminReportPage";
-import Backup from "./AdminBackupPage";
+import AdminHome from "./AdminHome";
+import AdminReportPage from "./AdminReportPage";
+import AdminBackupPage from "./AdminBackupPage";
  
-class Main extends Component {
+class AdminPage extends Component {
     render() {
         return (
             <BrowserRouter>
@@ -26,9 +26,9 @@ class Main extends Component {
                     </ul>
                     <div className="content">
                         <Routes>
-                            <Route path="/" element={<Home />}/>
-                            <Route path="/report" element={<ReportGen />}/>
-                            <Route path="/backup" element={<Backup />}/>
+                            <Route path="/" element={<AdminHome />}/>
+                            <Route path="/report" element={<AdminReportPage />}/>
+                            <Route path="/backup" element={<AdminBackupPage />}/>
                         </Routes>
                     </div>
                 </div>
@@ -37,4 +37,4 @@ class Main extends Component {
     }
 }
  
-export default Main;
+export default AdminPage;
