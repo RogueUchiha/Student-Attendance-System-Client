@@ -9,7 +9,7 @@ import Home from "./Home";
 import AdminReportPage from "./AdminReportPage";
 import AdminBackupPage from "./AdminBackupPage";
  
-class Main extends Component {
+class AdminPage extends Component {
     render() {
         return (
             <BrowserRouter>
@@ -37,4 +37,4 @@ class Main extends Component {
     }
 }
  
-export default Main;
+export default AdminPage;
