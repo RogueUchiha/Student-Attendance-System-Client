@@ -34,7 +34,7 @@ const NewAuthForm = () => {
         console.log("Wrong credentials");
       } else {
         const today = new Date();
-        today.setDate(27);
+        today.setDate(30);
         authCtx.login(
           response.data.AccessToken,
           today.toISOString(),
