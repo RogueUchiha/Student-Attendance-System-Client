@@ -174,7 +174,7 @@ const GoogleGeo = () => {
   const libraries = ["places, geometry"];
 
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyD1rHCSZhV_2u00P0Tp6BOujv3Gf6OfxCw",
+    googleMapsApiKey: "",
     libraries,
   });
 
